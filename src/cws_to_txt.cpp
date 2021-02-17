@@ -24,7 +24,8 @@ int main(int argc, char** argv) {
     for (size_t i = 0; i < num; ++i) {
         auto dim = read_value<uint32_t>(ifs);
         for (size_t j = 0; j < dim; ++j) {
-            auto v = read_value<uint8_t>(ifs);
+            // auto v = read_value<uint8_t>(ifs);
+            auto v = read_value<uint32_t>(ifs);
             cout << static_cast<uint32_t>(v) << ' ';
         }
         cout << '\n';
