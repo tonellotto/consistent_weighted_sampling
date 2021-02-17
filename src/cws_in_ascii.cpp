@@ -63,7 +63,8 @@ int run(const cmdline::parser& p) {
     ofstream out = make_ofstream(output_fn + ".bvecs");
 
     vector<data_vec_type> in_buffer(BUFFER_VECS);
-    vector<uint8_t> out_buffer(BUFFER_VECS * cws_dim);
+    // vector<uint8_t> out_buffer(BUFFER_VECS * cws_dim);
+    vector<uint32_t> out_buffer(BUFFER_VECS * cws_dim);
 
     size_t processed = 0;
     start_tp = chrono::system_clock::now();
@@ -87,7 +88,8 @@ int run(const cmdline::parser& p) {
 #pragma omp parallel for
         for (size_t id = 0; id < num_vecs; ++id) {
             const data_vec_type& data_vec = in_buffer[id];
-            uint8_t* cws_vec = &out_buffer[id * cws_dim];
+            // uint8_t* cws_vec = &out_buffer[id * cws_dim];
+            uint32_t* cws_vec = &out_buffer[id * cws_dim];
 
             for (size_t i = 0; i < cws_dim; ++i) {
                 const float* vec_R = &R[i * dat_dim];
@@ -114,7 +116,8 @@ int run(const cmdline::parser& p) {
                 }
 
                 // Write the lowest 8 bits for samples
-                cws_vec[i] = static_cast<uint8_t>(min_id & UINT8_MAX);
+                // cws_vec[i] = static_cast<uint8_t>(min_id & UINT8_MAX);
+                cws_vec[i] = min_id;
             }
         }
 
